@@ -1,21 +1,28 @@
-import { UserData, UserModalProps } from "@/interfaces";
+import { UserProps, UserModalProps } from "@/interfaces"; 
 import React, { useState } from "react";
 
 const UserModal: React.FC<UserModalProps> = ({ onClose, onSubmit }) => {
-  const [user, setUser] = useState<UserData>({
+  
+  const [post, setPost] = useState<UserProps>({
+    id: 0,
     name: "",
     username: "",
     email: "",
+    phone: "",
+    website: "",
+    address: { street: "", suite: "", city: "", zipcode: "", geo: { lat: "", lng: "" } },
+    company: { name: "", catchPhrase: "", bs: "" },
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setUser((prevUser) => ({ ...prevUser, [name]: value }));
+    
+    setPost((prevPost) => ({ ...prevPost, [name]: value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(user);
+    onSubmit(post); 
     onClose();
   };
 
@@ -24,13 +31,14 @@ const UserModal: React.FC<UserModalProps> = ({ onClose, onSubmit }) => {
       <div className="bg-white rounded-lg p-8 shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold mb-4 text-gray-800">Add New User</h2>
         <form onSubmit={handleSubmit}>
+          {/* Form fields now correctly reference the 'post' state object */}
           <div className="mb-4">
             <label htmlFor="name" className="block text-gray-700 font-medium mb-2">Full Name</label>
             <input
               type="text"
               id="name"
               name="name"
-              value={user.name}
+              value={post.name}
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="e.g., Leanne Graham"
@@ -43,7 +51,7 @@ const UserModal: React.FC<UserModalProps> = ({ onClose, onSubmit }) => {
               type="text"
               id="username"
               name="username"
-              value={user.username}
+              value={post.username}
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="e.g., Bret"
@@ -56,7 +64,7 @@ const UserModal: React.FC<UserModalProps> = ({ onClose, onSubmit }) => {
               type="email"
               id="email"
               name="email"
-              value={user.email}
+              value={post.email}
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="e.g., Sincere@april.biz"
