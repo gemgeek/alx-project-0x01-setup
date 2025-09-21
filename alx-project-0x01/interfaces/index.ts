@@ -55,3 +55,15 @@ export interface PostModalProps {
   onClose: () => void; 
   onSubmit: (post: PostData) => void; 
 }
+
+export interface UserData {
+  id?: number; // Optional because a new user won't have an ID yet
+  name: string;
+  username: string;
+  email: string;
+}
+
+export interface UserModalProps {
+  onClose: () => void;
+  onSubmit: (user: UserData) => void;
+}
